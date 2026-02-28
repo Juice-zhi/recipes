@@ -15,11 +15,7 @@
             --shadow: 0 10px 40px rgba(0,0,0,0.1);
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Noto Sans SC', sans-serif;
@@ -28,39 +24,14 @@
             color: var(--dark);
         }
         
-        /* Header */
         header {
             background: white;
             padding: 2rem;
             text-align: center;
             box-shadow: 0 2px 20px rgba(0,0,0,0.05);
             position: relative;
-            overflow: hidden;
         }
         
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,107,107,0.05) 0%, transparent 70%);
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .logo {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            position: relative;
-        }
-        
-        /* GitHub Link */
         .github-link {
             position: absolute;
             top: 1rem;
@@ -69,6 +40,7 @@
             transition: all 0.3s ease;
             padding: 0.5rem;
             border-radius: 8px;
+            text-decoration: none;
         }
         
         .github-link:hover {
@@ -77,13 +49,9 @@
             transform: scale(1.1);
         }
         
-        .subtitle {
-            color: var(--gray);
-            font-size: 1rem;
-            font-weight: 300;
-        }
+        .logo { font-size: 3rem; margin-bottom: 0.5rem; }
+        .subtitle { color: var(--gray); font-size: 1rem; font-weight: 300; }
         
-        /* Search */
         .search-container {
             max-width: 600px;
             margin: -1.5rem auto 2rem;
@@ -128,12 +96,8 @@
             transition: all 0.3s ease;
         }
         
-        .search-box button:hover {
-            background: #ff5252;
-            transform: scale(1.02);
-        }
+        .search-box button:hover { background: #ff5252; transform: scale(1.02); }
         
-        /* Tabs */
         .tabs {
             display: flex;
             justify-content: center;
@@ -161,16 +125,7 @@
             box-shadow: 0 5px 20px rgba(255,107,107,0.3);
         }
         
-        .tab:hover:not(.active) {
-            transform: translateY(-2px);
-        }
-        
-        /* Grid */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem 2rem;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem 2rem; }
         
         .recipe-grid {
             display: grid;
@@ -195,14 +150,8 @@
         }
         
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .card-image {
@@ -214,17 +163,8 @@
             font-size: 4rem;
         }
         
-        .card-content {
-            padding: 1.5rem;
-        }
-        
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-        
+        .card-content { padding: 1.5rem; }
+        .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
         .card-number {
             display: inline-block;
             background: var(--light);
@@ -235,7 +175,6 @@
             font-weight: 500;
         }
         
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -258,21 +197,10 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         
-        .page-btn:hover {
-            transform: translateY(-2px);
-        }
+        .page-btn:hover { transform: translateY(-2px); }
+        .page-btn.active { background: var(--primary); color: white; }
+        .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         
-        .page-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .page-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        /* Recipe Modal */
         .modal {
             display: none;
             position: fixed;
@@ -283,20 +211,9 @@
             background: rgba(0,0,0,0.5);
             z-index: 1000;
             overflow-y: auto;
-            animation: fadeIn 0.3s ease;
         }
         
-        .modal.show {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 2rem;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        .modal.show { display: flex; align-items: flex-start; justify-content: center; padding: 2rem; }
         
         .modal-content {
             background: white;
@@ -306,18 +223,11 @@
             max-height: 90vh;
             overflow-y: auto;
             animation: slideUp 0.4s ease;
-            position: relative;
         }
         
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .modal-header {
@@ -328,11 +238,6 @@
             position: sticky;
             top: 0;
             z-index: 10;
-        }
-        
-        .modal-header h2 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
         }
         
         .close-btn {
@@ -347,21 +252,11 @@
             border-radius: 50%;
             font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
         
-        .close-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
-        }
+        .modal-body { padding: 2rem; }
         
-        .modal-body {
-            padding: 2rem;
-        }
-        
-        .section {
-            margin-bottom: 2rem;
-        }
+        .section { margin-bottom: 2rem; }
         
         .section-title {
             font-size: 1.2rem;
@@ -372,22 +267,11 @@
             border-bottom: 2px solid var(--light);
         }
         
-        .ingredient-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 0.5rem;
-        }
+        .ingredient-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.5rem; }
         
-        .ingredient-item {
-            padding: 0.5rem;
-            background: var(--light);
-            border-radius: 8px;
-            font-size: 0.9rem;
-        }
+        .ingredient-item { padding: 0.5rem; background: var(--light); border-radius: 8px; font-size: 0.9rem; }
         
-        .step-list {
-            counter-reset: step;
-        }
+        .step-list { counter-reset: step; }
         
         .step-item {
             position: relative;
@@ -416,81 +300,35 @@
             font-weight: 700;
         }
         
-        .tips {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid #ffc107;
-        }
+        .tips { background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #ffc107; }
+        .tips-title { font-weight: 700; color: #856404; margin-bottom: 0.5rem; }
+        .tips-list { list-style: none; }
+        .tips-list li { padding: 0.3rem 0; padding-left: 1.5rem; position: relative; }
+        .tips-list li::before { content: '💡'; position: absolute; left: 0; }
         
-        .tips-title {
-            font-weight: 700;
-            color: #856404;
-            margin-bottom: 0.5rem;
-        }
+        .stats { text-align: center; padding: 1rem; color: var(--gray); font-size: 0.9rem; }
         
-        .tips-list {
-            list-style: none;
-        }
+        .loading { text-align: center; padding: 3rem; color: var(--gray); }
+        .spinner { width: 40px; height: 40px; border: 3px solid var(--light); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-        .tips-list li {
-            padding: 0.3rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
+        .no-results { text-align: center; padding: 4rem 2rem; color: var(--gray); }
+        .no-results-icon { font-size: 4rem; margin-bottom: 1rem; }
         
-        .tips-list li::before {
-            content: '💡';
-            position: absolute;
-            left: 0;
-        }
-        
-        /* Stats */
-        .stats {
-            text-align: center;
-            padding: 1rem;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 3rem;
-            color: var(--gray);
-        }
-        
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--light);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* No results */
-        .no-results {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--gray);
-        }
-        
-        .no-results-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
+        /* Markdown content styling */
+        .md-content { line-height: 1.8; }
+        .md-content h2 { color: var(--primary); margin: 1.5rem 0 1rem; font-size: 1.3rem; border-bottom: 2px solid var(--light); padding-bottom: 0.5rem; }
+        .md-content h3 { color: var(--dark); margin: 1rem 0 0.5rem; font-size: 1.1rem; }
+        .md-content ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+        .md-content li { margin: 0.3rem 0; }
+        .md-content p { margin: 0.5rem 0; }
+        .md-content strong { color: var(--dark); }
     </style>
 </head>
 <body>
     <header>
         <a href="https://github.com/Juice-zhi/recipes" target="_blank" class="github-link">
-            <svg height="24" viewBox="0 0 16 16" version="1.24" aria-hidden1" width="="true"><path fill="currentColor" fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+            <svg height="24" viewBox="0 0 16 16" width="24"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
         </a>
         <div class="logo">🍳</div>
         <h1>食谱大全</h1>
@@ -519,7 +357,6 @@
         <div class="pagination" id="pagination"></div>
     </div>
     
-    <!-- Recipe Modal -->
     <div class="modal" id="recipeModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -527,26 +364,13 @@
                 <h2 id="modalTitle"></h2>
             </div>
             <div class="modal-body" id="modalBody">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>加载中...</p>
-                </div>
+                <div class="loading"><div class="spinner"></div><p>加载中...</p></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Recipe data - these would be loaded from files in production
-        const classicRecipes = [];
-        const dessertsRecipes = [];
-        
-        let currentTab = 'classic';
-        let currentPage = 1;
-        let searchQuery = '';
-        const itemsPerPage = 12;
-        let searchTimeout = null;
-        
-        // Load recipe names from file structure (simulated)
+        // 菜谱列表 - 使用文件路径
         const classicNames = [
             "01-麻婆豆腐", "02-宫保鸡丁", "03-红烧肉", "04-糖醋排骨", "05-鱼香肉丝",
             "06-北京烤鸭", "07-西湖醋鱼", "08-辣子鸡", "09-东坡肉", "10-意大利肉酱面",
@@ -593,506 +417,34 @@
             "96-紫薯西米露", "97-豆腐布朗尼", "98-豆腐芝士蛋糕", "99-南瓜派", "100-意式圣诞蛋糕"
         ];
         
-        // Recipe content 
-        const recipeContents = {
-            "01-麻婆豆腐": {
-                intro: "麻婆豆腐是四川传统名菜，以麻辣鲜香著称，是川菜代表性菜品。",
-                ingredients: ["豆腐 400g", "猪肉末 100g", "郫县豆瓣酱 2勺", "花椒粉 1勺", "蒜末 适量", "葱姜 适量", "生抽 1勺", "老抽 1勺", "糖 1勺", "水淀粉 适量"],
-                steps: [
-                    "豆腐切小块，用盐水焯一下备用",
-                    "锅中热油，爆香肉末至变色",
-                    "加入郫县豆瓣酱炒出红油",
-                    "加入葱姜蒜末炒香",
-                    "加入适量清水，放入豆腐",
-                    "加入生抽、老抽、糖调味",
-                    "小火炖煮5分钟",
-                    "用水淀粉勾芡，撒上花椒粉",
-                    "出锅装盘，撒上葱花"
-                ],
-                tips: ["豆腐提前焯水可以去豆腥味", "勾芡要分次加入", "花椒粉可以根据个人口味调整"]
-            },
-            "02-宫保鸡丁": {
-                intro: "宫保鸡丁是四川传统名菜，以鸡肉嫩滑、花生酥脆、味道香辣微甜著称。",
-                ingredients: ["鸡胸肉 300g", "花生米 50g", "干辣椒 10个", "花椒 1勺", "葱姜蒜 适量", "酱油 1勺", "醋 1勺", "糖 1勺", "料酒 1勺", "水淀粉 适量"],
-                steps: [
-                    "鸡胸肉切丁，用料酒、淀粉腌制10分钟",
-                    "花生米炸至酥脆备用",
-                    "干辣椒切段，葱姜蒜切末",
-                    "锅中热油，下鸡丁滑炒至变色盛出",
-                    "锅中留底油，下花椒、干辣椒炒香",
-                    "加入葱姜蒜末炒香",
-                    "放入鸡丁，加酱油、醋、糖调味",
-                    "加入花生米翻炒均匀",
-                    "用水淀粉勾芡，出锅"
-                ],
-                tips: ["鸡丁腌制后更嫩滑", "花生要最后放保持酥脆", "火要大火爆炒"]
-            },
-            "03-红烧肉": {
-                intro: "红烧肉是中华传统名菜，色泽红亮，肥而不腻，是家常必备的硬菜。",
-                ingredients: ["五花肉 500g", "冰糖 30g", "生抽 2勺", "老抽 1勺", "料酒 1勺", "八角 2个", "桂皮 1块", "葱姜 适量", "盐 适量"],
-                steps: [
-                    "五花肉切方块，焯水备用",
-                    "锅中放少量油，放入冰糖炒糖色",
-                    "糖色变深后放入五花肉翻炒",
-                    "加入生抽、老抽、料酒翻炒上色",
-                    "加入八角、桂皮、葱姜",
-                    "加入开水，没过肉块",
-                    "大火烧开后转小火炖1小时",
-                    "大火收汁，加盐调味",
-                    "出锅装盘，撒上葱花"
-                ],
-                tips: ["炒糖色要小火慢炒", "炖肉要一次性加足水", "肥瘦相间的五花肉最好"]
-            },
-            "04-糖醋排骨": {
-                intro: "糖醋排骨是经典家常菜，酸甜可口，外酥里嫩，深受大家喜爱。",
-                ingredients: ["排骨 500g", "冰糖 30g", "白醋 3勺", "生抽 2勺", "料酒 1勺", "葱姜 适量", "盐 适量", "白芝麻 少许"],
-                steps: [
-                    "排骨剁成小块，焯水备用",
-                    "锅中放油，放入排骨煎至金黄",
-                    "加入葱姜翻炒",
-                    "加入料酒、生抽翻炒",
-                    "加入开水没过排骨",
-                    "放入冰糖，小火炖30分钟",
-                    "大火收汁，加入白醋",
-                    "汁浓稠时出锅，撒上白芝麻"
-                ],
-                tips: ["排骨先煎再炖更香", "醋要最后放保持酸味", "收汁要不停翻炒"]
-            },
-            "05-鱼香肉丝": {
-                intro: "鱼香肉丝是四川经典菜，虽然没有鱼但味道鲜美，是下饭神器。",
-                ingredients: ["猪里脊肉 200g", "木耳 50g", "胡萝卜 1根", "泡椒 适量", "葱姜蒜 适量", "酱油 1勺", "醋 1勺", "糖 1勺", "淀粉 适量"],
-                steps: [
-                    "里脊肉切丝，用淀粉腌制",
-                    "木耳、胡萝卜切丝",
-                    "调好鱼香汁：酱油+醋+糖+淀粉+水",
-                    "锅中热油，下肉丝炒散",
-                    "加入泡椒、葱姜蒜炒香",
-                    "加入胡萝卜、木耳丝翻炒",
-                    "倒入鱼香汁，大火翻炒",
-                    "收汁后出锅"
-                ],
-                tips: ["肉丝要顺着纹理切", "调汁比例要掌握好", "全程大火快炒"]
-            },
-            "06-北京烤鸭": {
-                intro: "北京烤鸭是中国名菜，用明炉烤制，鸭皮酥脆，鸭肉鲜嫩，配以甜面酱和葱丝黄瓜条食用。",
-                ingredients: ["北京填鸭 1只", "麦芽糖 50g", "白醋 2勺", "甜面酱 适量", "葱丝 适量", "黄瓜丝 适量", "薄饼 适量"],
-                steps: [
-                    "鸭子洗净，在表皮刷上麦芽糖和白醋的混合液",
-                    "挂在通风处晾干表皮",
-                    "烤箱预热200°C，放入鸭子",
-                    "先烤背部，再烤腹部",
-                    "烤至表皮金黄酥脆（约40分钟）",
-                    "取出片成薄片",
-                    "配以甜面酱、葱丝、黄瓜丝、薄饼食用"
-                ],
-                tips: ["鸭子要充分晾干", "烤制时注意观察颜色", "片鸭肉要趁热"]
-            },
-            "07-西湖醋鱼": {
-                intro: "西湖醋鱼是杭州名菜，用草鱼制成，酸甜可口，鱼肉鲜嫩。",
-                ingredients: ["草鱼 1条", "姜末 适量", "葱段 适量", "酱油 2勺", "醋 3勺", "糖 2勺", "料酒 1勺", "水淀粉 适量"],
-                steps: [
-                    "草鱼洗净，从尾部片成两片",
-                    "锅中水开，放入鱼片",
-                    "加入葱段、料酒，煮约3分钟",
-                    "捞出装盘",
-                    "锅中留汤汁，加入酱油、醋、糖",
-                    "加入姜末，煮沸后用水淀粉勾芡",
-                    "将汁浇在鱼身上",
-                    "撒上姜丝即可"
-                ],
-                tips: ["鱼片要切得厚薄均匀", "煮鱼时间不宜过长", "勾芡要浓稠"]
-            },
-            "08-辣子鸡": {
-                intro: "辣子鸡是四川名菜，干辣椒和花椒香气浓郁，鸡肉干香麻辣。",
-                ingredients: ["鸡腿肉 400g", "干辣椒 50g", "花椒 2勺", "葱姜蒜 适量", "盐 1勺", "料酒 1勺", "淀粉 适量", "白芝麻 少许"],
-                steps: [
-                    "鸡腿肉切丁，用盐、料酒、淀粉腌制",
-                    "干辣椒切段，去籽",
-                    "锅中多放油，下鸡丁炸至金黄",
-                    "锅中留底油，下花椒、干辣椒炒香",
-                    "加入葱姜蒜末",
-                    "放入炸好的鸡丁翻炒",
-                    "撒上白芝麻，出锅"
-                ],
-                tips: ["鸡丁要炸至外酥里嫩", "干辣椒和花椒要炒香", "可以根据口味调整辣度"]
-            },
-            "09-东坡肉": {
-                intro: "东坡肉是杭州传统名菜，相传由苏轼发明，色泽红亮，肥而不腻。",
-                ingredients: ["五花肉 500g", "冰糖 50g", "生抽 3勺", "老抽 1勺", "料酒 3勺", "葱段 适量", "姜片 适量", "八角 1个"],
-                steps: [
-                    "五花肉切大方块，焯水备用",
-                    "砂锅底铺葱段、姜片",
-                    "放入五花肉，皮朝上",
-                    "加入冰糖、生抽、老抽、料酒",
-                    "加入开水没过肉",
-                    "大火烧开转小火炖2小时",
-                    "肉皮朝上装入蒸碗",
-                    "蒸30分钟即可"
-                ],
-                tips: ["要选择肥瘦相间的五花肉", "炖的时间要够长", "蒸过之后更软烂"]
-            },
-            "10-蛋挞": {
-                intro: "蛋挞是中西结合的经典甜点，酥脆的挞皮包裹着嫩滑的蛋奶馅。",
-                ingredients: ["低筋面粉 150g", "黄油 80g", "糖粉 30g", "蛋黄 3个", "牛奶 100ml", "淡奶油 100ml", "细砂糖 40g"],
-                steps: [
-                    "黄油和糖粉搅拌至发白",
-                    "加入蛋黄拌匀",
-                    "筛入面粉，揉成团，冷藏30分钟",
-                    "面团擀成3mm厚，用模具切出圆形",
-                    "放入蛋挞模具中整形",
-                    "制作蛋挞液：蛋黄+糖+牛奶+淡奶油搅匀",
-                    "倒入模具8分满",
-                    "220°C烤约15分钟至表面焦黄"
-                ],
-                tips: ["挞皮要扎孔防止鼓起", "蛋挞液要过筛", "烤到表面有焦斑即可"]
-            },
-            "01-提拉米苏": {
-                intro: "提拉米苏是意大利经典甜点，意为'带我走'，口感绵密，咖啡香浓郁。",
-                ingredients: ["马斯卡彭奶酪 250g", "淡奶油 150ml", "手指饼干 200g", "浓缩咖啡 200ml", "蛋黄 3个", "细砂糖 60g", "可可粉 适量"],
-                steps: [
-                    "咖啡放凉，可加入朗姆酒",
-                    "蛋黄加糖隔热水打发",
-                    "加入马斯卡彭奶酪搅拌均匀",
-                    "淡奶油打发至七分发",
-                    "与奶酪糊混合翻拌",
-                    "手指饼干蘸咖啡铺在容器底",
-                    "铺一层奶酪糊，重复操作",
-                    "冷藏4小时以上",
-                    "食用前筛上可可粉"
-                ],
-                tips: ["手指饼干不要泡太久", "可可粉要现筛才香", "朗姆酒可增添风味"]
-            },
-            "02-芝士蛋糕": {
-                intro: "芝士蛋糕是风靡全球的甜点，口感细腻绵密，奶香浓郁。",
-                ingredients: ["奶油奶酪 500g", "细砂糖 100g", "鸡蛋 4个", "柠檬皮屑 1个", "柠檬汁 20ml", "香草精 1茶匙", "淡奶油 120ml", "玉米淀粉 20g"],
-                steps: [
-                    "消化饼干压碎，加融化的黄油铺在模具底",
-                    "奶油奶酪室温软化，加糖打至顺滑",
-                    "逐个加入鸡蛋，每次搅拌均匀",
-                    "加入柠檬皮屑、柠檬汁和香草精",
-                    "筛入玉米淀粉拌匀",
-                    "倒入铺好饼底的模具",
-                    "160°C水浴烤约60分钟",
-                    "关闭烤箱焖1小时后再取出",
-                    "冷藏4小时以上"
-                ],
-                tips: ["奶油奶酪要软化到位", "水浴法防止表面开裂", "判断熟度：中间稍微晃动"]
-            },
-            "03-巧克力蛋糕": {
-                intro: "巧克力蛋糕是经典甜点，浓郁的可可香气与绵密的口感完美结合。",
-                ingredients: ["低筋面粉 100g", "可可粉 30g", "细砂糖 80g", "鸡蛋 3个", "植物油 50ml", "牛奶 60ml", "泡打粉 1茶匙", "香草精 1茶匙"],
-                steps: [
-                    "鸡蛋分离蛋黄和蛋白",
-                    "蛋黄加入30g糖搅拌至淡黄色",
-                    "加入植物油、牛奶和香草精拌匀",
-                    "筛入面粉、可可粉和泡打粉翻拌",
-                    "蛋白分三次加入50g糖打至硬性发泡",
-                    "1/3蛋白霜加入蛋黄糊中翻拌",
-                    "倒入模具，170°C烤约35分钟",
-                    "冷却后装饰"
-                ],
-                tips: ["可可粉选择无糖的", "蛋白打发要到位", "翻拌要轻柔防止消泡"]
-            },
-            "04-布朗尼": {
-                intro: "布朗尼是美式经典甜点，介于蛋糕与饼干之间，外酥内湿，巧克力浓郁。",
-                ingredients: ["黑巧克力 150g", "黄油 100g", "细砂糖 100g", "鸡蛋 2个", "低筋面粉 60g", "可可粉 15g", "核桃碎 80g"],
-                steps: [
-                    "巧克力和黄油隔热水融化",
-                    "加入细砂糖搅拌均匀",
-                    "加入鸡蛋和香草精拌匀",
-                    "筛入面粉、可可粉和盐",
-                    "翻拌至无干粉",
-                    "加入核桃碎拌匀",
-                    "倒入模具，180°C烤约20-25分钟",
-                    "冷却后切块"
-                ],
-                tips: ["巧克力选择70%以上", "判断熟度：牙签有少量粘连即可", "完全冷却后再切块"]
-            },
-            "05-曲奇饼干": {
-                intro: "曲奇饼干是美式烘焙甜点，酥脆可口，是下午茶的经典选择。",
-                ingredients: ["低筋面粉 200g", "黄油 120g", "细砂糖 60g", "红糖 40g", "鸡蛋 1个", "香草精 1茶匙", "泡打粉 1/2茶匙", "巧克力豆 100g"],
-                steps: [
-                    "软化的黄油加入细砂糖和红糖打至体积膨胀",
-                    "加入鸡蛋和香草精继续搅拌",
-                    "筛入面粉、泡打粉，用刮刀翻拌",
-                    "加入巧克力豆拌匀",
-                    "面团分成小球，间隔摆在烤盘上",
-                    "轻轻压扁表面",
-                    "180°C烤约12-15分钟至边缘金黄",
-                    "冷却后密封保存"
-                ],
-                tips: ["黄油软化即可不要融化", "面团冷藏后更好操作", "巧克力豆可用其他替代"]
-            },
-            "06-冰淇淋": {
-                intro: "冰淇淋是夏季最受欢迎的冷冻甜点，绵密顺滑，口味多样。",
-                ingredients: ["蛋黄 4个", "细砂糖 80g", "牛奶 200ml", "淡奶油 200ml", "香草精 1茶匙"],
-                steps: [
-                    "蛋黄和糖搅拌至淡黄色",
-                    "牛奶加热至微沸，慢慢倒入蛋黄中",
-                    "倒回锅中，小火加热搅拌至浓稠",
-                    "加入香草精，过筛去除颗粒",
-                    "放入冰水中冷却",
-                    "淡奶油打发至七分发",
-                    "与蛋奶酱混合均匀",
-                    "每30分钟搅拌一次，共3-4次",
-                    "冻至硬身后食用"
-                ],
-                tips: ["加热时要不断搅拌防止结块", "过筛保证口感细腻", "手动搅拌次数越多越绵密"]
-            },
-            "07-焦糖布丁": {
-                intro: "焦糖布丁是经典法式甜点，细腻的布丁搭配酥脆的焦糖表层。",
-                ingredients: ["细砂糖 100g", "冷水 30ml", "热水 30ml", "蛋黄 4个", "全蛋 1个", "细砂糖 50g", "牛奶 250ml", "淡奶油 150ml", "香草精 1茶匙"],
-                steps: [
-                    "糖和冷水放入锅中，中火煮至琥珀色",
-                    "关火加入热水，倒入模具底部铺一层",
-                    "蛋黄和全蛋、糖搅拌至淡黄色",
-                    "牛奶加热至微沸，慢慢倒入蛋液中",
-                    "加入淡奶油和香草精拌匀，过筛",
-                    "倒入铺好焦糖的模具中",
-                    "盖锡纸，150°C水浴烤约45分钟",
-                    "冷藏2小时以上",
-                    "食用前在表面撒糖，用喷枪烤焦"
-                ],
-                tips: ["焦糖琥珀色即可不要过火", "水浴温度要控制好", "喷枪可用烤箱最高温替代"]
-            },
-            "08-水果慕斯": {
-                intro: "水果慕斯是清新爽口的法式甜点，绵密的慕斯搭配新鲜水果。",
-                ingredients: ["新鲜水果 200g", "细砂糖 60g", "淡奶油 200ml", "吉利丁片 2片", "柠檬汁 15ml"],
-                steps: [
-                    "水果洗净切块，加30g糖和柠檬汁打成泥",
-                    "吉利丁片用冷水泡5分钟",
-                    "淡奶油加30g糖打发至七分发",
-                    "水果泥隔热水加热，放入吉利丁搅拌融化",
-                    "冷却至室温后与打发的淡奶油翻拌均匀",
-                    "倒入模具，冷藏4小时以上",
-                    "脱模后装饰水果"
-                ],
-                tips: ["吉利丁要用冷水泡", "水果泥要冷却后再与奶油混合", "脱模可用热毛巾捂一下"]
-            },
-            "09-苹果派": {
-                intro: "苹果派是美国家庭最常做的甜点之一，酥脆的派皮包裹香甜的苹果馅。",
-                ingredients: ["低筋面粉 300g", "黄油 150g", "细砂糖 30g", "盐 3g", "冰水 80ml", "苹果 600g", "细砂糖 80g", "肉桂粉 1茶匙", "柠檬汁 15ml", "玉米淀粉 20g"],
-                steps: [
-                    "面粉、糖、盐混合，加入冷藏的黄油块，用指尖搓成粗粒",
-                    "加入冰水拌成团，分成两份冷藏1小时",
-                    "苹果去皮切块，加糖、肉桂粉、柠檬汁、玉米淀粉拌匀",
-                    "一份派皮擀开铺在派盘上，放入苹果馅",
-                    "另一份派皮擀开盖在上面，边缘捏合，表面划几刀",
-                    "刷蛋黄液，撒粗砂糖",
-                    "200°C烤15分钟后降至180°C再烤30分钟"
-                ],
-                tips: ["黄油要保持冷藏", "苹果选择酸甜口感的", "派皮要捏紧防止馅溢出"]
-            },
-            // 更多菜谱...
-            "11-舒芙蕾": {
-                intro: "舒芙蕾是法国经典甜点，梦幻般轻盈的口感如同在云端漫步。",
-                ingredients: ["蛋黄 2个", "细砂糖 30g", "低筋面粉 20g", "牛奶 150ml", "黄油 10g", "蛋白 3个", "细砂糖 40g", "柠檬汁 少许"],
-                steps: [
-                    "模具内壁抹黄油，撒糖转动让糖粘满，倒入冰箱冷藏",
-                    "蛋黄和30g糖搅拌至淡黄色，筛入面粉拌匀",
-                    "牛奶加热至微沸，慢慢倒入蛋黄中，倒回锅中，小火搅拌至浓稠，放入碗中加入黄油",
-                    "蛋白加柠檬汁打至粗泡，分三次加入40g糖打至硬性发泡",
-                    "1/3蛋白霜加入蛋黄糊翻拌，倒回剩余蛋白霜中轻柔翻拌",
-                    "倒入模具，190°C烤约12-14分钟",
-                    "立即食用否则会塌陷！"
-                ],
-                tips: ["模具准备是关键", "蛋白必须硬性发泡", "出炉后立即食用"]
-            },
-            "18-杨枝甘露": {
-                intro: "杨枝甘露是香港经典甜品，芒果的香甜与西柚的酸苦完美平衡。",
-                ingredients: ["芒果 2个", "西柚 1/2个", "西米 50g", "椰奶 200ml", "淡奶油 100ml", "细砂糖 30g"],
-                steps: [
-                    "西米水开下锅，煮15分钟焖10分钟，透明后过冷水",
-                    "芒果去皮，一半切块，一半打泥",
-                    "西柚取出果肉，剥成小粒",
-                    "芒果泥加一半椰奶和糖搅拌",
-                    "剩余椰奶和淡奶油混合，加入西米和芒果酱",
-                    "装碗后放芒果块和西柚果肉"
-                ],
-                tips: ["芒果要选成熟度高的", "西柚要去除白色筋膜", "即做即食"]
-            },
-            "20-双皮奶": {
-                intro: "双皮奶是广东顺德的传统甜品，因表面有两层奶皮而得名。",
-                ingredients: ["全脂牛奶 500ml", "鸡蛋清 3个", "细砂糖 40g"],
-                steps: [
-                    "牛奶放入锅中加热至即将沸腾，倒入碗中放凉",
-                    "牛奶冷却后表面形成奶皮，用筷子在边缘戳小口，将牛奶倒出留奶皮在碗底",
-                    "倒出的牛奶加蛋清和糖搅拌均匀，过筛",
-                    "将混合液倒回碗中，奶皮会浮在上面",
-                    "盖保鲜膜，蒸锅水开后放入，中火蒸约15分钟",
-                    "冷却后会形成第二层奶皮"
-                ],
-                tips: ["必须用全脂牛奶", "牛奶不能沸腾", "蒸制火候要掌握好"]
-            },
-            "24-芝士焗红薯": {
-                intro: "芝士焗红薯是中西结合的甜点，绵密的红薯加上拉丝的芝士。",
-                ingredients: ["红薯 500g", "细砂糖 30g", "黄油 30g", "牛奶 50ml", "鸡蛋黄 1个", "马苏里拉芝士 100g"],
-                steps: [
-                    "红薯洗净去皮，切成厚片蒸熟",
-                    "蒸熟的红薯压成泥，加入糖、黄油和牛奶搅拌",
-                    "装入烤碗中，抹平表面",
-                    "铺上马苏里拉芝士",
-                    "200°C烤约15分钟至芝士融化表面微焦"
-                ],
-                tips: ["选择蜜薯或烟薯", "趁热操作容易压泥", "芝士拉丝效果最好"]
-            },
-            "27-雪花酥": {
-                intro: "雪花酥是网红零食，酥脆的饼干搭配坚果和果干，裹上奶粉。",
-                ingredients: ["棉花糖 150g", "黄油 40g", "奶粉 50g", "蔓越莓干 60g", "坚果 80g", "韧性饼干 150g"],
-                steps: [
-                    "蔓越莓干切碎，坚果切碎，饼干掰成小块",
-                    "不粘锅小火加热，放入黄油融化",
-                    "加入棉花糖不断搅拌至完全融化",
-                    "倒入奶粉翻拌",
-                    "加入饼干、坚果和蔓越莓快速翻拌",
-                    "倒入烤盘上趁热整形成方形",
-                    "冷却后切块，撒上奶粉"
-                ],
-                tips: ["全程小火防止焦化", "动作要快", "要用韧性饼干"]
-            },
-            "31-桂花糕": {
-                intro: "桂花糕是江南传统甜点，米香混合桂花香，口感软糯清甜。",
-                ingredients: ["糯米粉 150g", "粘米粉 50g", "细砂糖 60g", "清水 180ml", "糖桂花 50g", "干桂花 少许"],
-                steps: [
-                    "糯米粉和粘米粉放入盆中，加糖拌匀",
-                    "慢慢加入清水，用手搓成松散的粉粒",
-                    "将粉粒过筛",
-                    "蒸笼铺湿布，放上慕斯圈，铺入粉类抹平表面",
-                    "盖保鲜膜，大火蒸约25分钟",
-                    "蒸到15分钟时撒上糖桂花",
-                    "取出冷却，表面撒干桂花，切块食用"
-                ],
-                tips: ["粉类比例3:1口感软糯", "水要慢慢加", "保鲜膜防止水滴"]
-            },
-            "32-红糖糍粑": {
-                intro: "红糖糍粑是川渝传统小吃，软糯的糯米糍粑裹上红糖浆。",
-                ingredients: ["糯米粉 200g", "温水 150ml", "红糖 60g", "清水 80ml", "食用油 适量"],
-                steps: [
-                    "糯米粉慢慢加入温水，揉成光滑面团",
-                    "将面团分成小份，搓成长条，再分成约3cm的小块，轻轻压扁",
-                    "锅中放少许油，放入糍粑块小火煎至两面金黄",
-                    "红糖和清水放入锅中，小火加热搅拌煮至浓稠",
-                    "煎好的糍粑淋上红糖浆"
-                ],
-                tips: ["温水和面更柔软", "小火煎制", "趁热吃"]
-            },
-            "37-雪梅娘": {
-                intro: "雪梅娘是日式冰点心，软糯的糯米外皮包裹着冰淇淋。",
-                ingredients: ["糯米粉 100g", "玉米淀粉 30g", "细砂糖 50g", "牛奶 150ml", "黄油 15g", "冰淇淋 200g", "熟糯米粉 适量"],
-                steps: [
-                    "糯米粉、淀粉、糖混合，加入牛奶搅拌至无颗粒，盖保鲜膜扎孔蒸约20分钟",
-                    "蒸熟后加入黄油揉匀，冷却至温热",
-                    "分成小球，擀成薄皮",
-                    "放上冰淇淋球，收口包紧",
-                    "放入冰箱冷冻"
-                ],
-                tips: ["蒸熟才能包", "糯米团温热时好操作", "冰淇淋稍软一点好包"]
-            },
-            "41-芝麻糊": {
-                intro: "芝麻糊是传统养颜甜品，黑芝麻富含钙质，香浓顺滑。",
-                ingredients: ["黑芝麻 100g", "糯米 30g", "冰糖 50g", "清水 800ml"],
-                steps: [
-                    "芝麻洗净晾干，小火炒香至微黄",
-                    "糯米同样小火炒至微黄",
-                    "芝麻和糯米放入料理机，加适量水打磨成浆",
-                    "倒入锅中加剩余的水和冰糖",
-                    "小火不断搅拌煮至浓稠"
-                ],
-                tips: ["小火慢炒防止糊", "糯米让口感更顺滑", "煮要不断搅拌"]
-            },
-            "46-奥利奥芝士蛋糕": {
-                intro: "奥利奥芝士蛋糕将经典饼干融入芝士蛋糕，甜而不腻。",
-                ingredients: ["奥利奥饼干 200g", "黄油 80g", "奶油奶酪 450g", "细砂糖 100g", "鸡蛋 3个", "淡奶油 100ml", "香草精 1茶匙"],
-                steps: [
-                    "奥利奥去夹心后压碎，加入融化的黄油拌匀，铺在模具底部压实，冷藏30分钟",
-                    "奶油奶酪加糖打顺滑，逐个加鸡蛋",
-                    "加淡奶油和香草精，加入奥利奥碎拌匀",
-                    "倒入模具，160°C水浴烤约60分钟，焖1小时",
-                    "冷藏4小时"
-                ],
-                tips: ["奥利奥原味即可", "饼干碎保持颗粒感", "根据烤箱调整温度"]
-            }
-        };
+        // GitHub Raw 内容基础 URL
+        const BASE_URL = 'https://raw.githubusercontent.com/Juice-zhi/recipes/master';
         
-        // Icons for recipes
+        let currentTab = 'classic';
+        let currentPage = 1;
+        let searchQuery = '';
+        const itemsPerPage = 12;
+        let searchTimeout = null;
+        
         const foodIcons = ['🍲', '🥘', '🍜', '🍣', '🍛', '🍕', '🍔', '🌮', '🥗', '🍝', '🥩', '🍗', '🍤', '🥟', '🍥', '🍡', '🧁', '🍰', '🍧', '🍮'];
         
-        function getIcon(index) {
-            return foodIcons[index % foodIcons.length];
-        }
+        function getIcon(index) { return foodIcons[index % foodIcons.length]; }
         
-        // 拼音映射表（中文名 -> 拼音首字母缩写）
+        // 拼音首字母映射
         const pinyinMap = {
-            // 经典菜谱
             "01-麻婆豆腐": "mpdf", "02-宫保鸡丁": "gbjd", "03-红烧肉": "hsr", "04-糖醋排骨": "tcpg",
             "05-鱼香肉丝": "yxrs", "06-北京烤鸭": "bjky", "07-西湖醋鱼": "xhcy", "08-辣子鸡": "lzj",
-            "09-东坡肉": "dpr", "10-意大利肉酱面": "ydlrjm", "11-越南春卷": "vncj", "12-寿司卷": "ssj",
-            "13-韩式烤肉": "hskr", "14-冬阴功汤": "dygt", "15-印度咖喱鸡": "ydklj", "16-牛排": "np",
-            "17-披萨": "ps", "18-拉面": "lm", "19-天妇罗": "tfl", "20-照烧鸡排": "zsjp",
-            "21-海南鸡饭": "hnjf", "22-咖喱蟹": "klx", "23-肉骨茶": "rgc", "24-印度馕": "ydn",
-            "25-印度香饭": "ydxf", "26-泡菜": "pc", "27-味噌汤": "mzt", "28-石锅拌饭": "sgbf",
-            "29-汉堡": "hb", "30-西班牙海鲜饭": "xbhhxf", "31-法式洋葱汤": "fsyct", "32-凯撒沙拉": "kssl",
-            "33-班尼迪克蛋": "bndkd", "34-舒芙蕾": "sfl", "35-口水鸡": "ksj", "36-狮子头": "szt",
-            "37-锅包肉": "gbr", "38-叫化鸡": "jhj", "39-开水白菜": "ksbc", "40-樟茶鸭": "zcy",
-            "41-烤羊排": "kyp", "42-法式蜗牛": "fswn", "43-希腊沙拉": "xlsl", "44-蘑菇浓汤": "mgnt",
-            "45-勃艮第红酒牛肉": "bgdhjnr", "46-印度玛萨拉": "ydmsl", "47-印度塔利": "ydtl",
-            "48-糖醋里脊": "tclj", "49-番茄意大利面": "fqydlm", "50-味增汤": "mzt",
-            "51-部队锅": "bdg", "52-寿司卷": "ssj", "53-墨西哥卷饼": "mxgjb",
-            "54-越南河粉": "vnhf", "55-意大利烩饭": "ydlhf", "56-炸鸡": "zj", "57-沙嗲牛肉": "sdnr",
-            "58-印度飞饼": "ydfb", "59-煎牛排": "jnp", "60-烤鸡翅": "kjc", "61-罗宋汤": "lst",
-            "62-蛋炒饭": "dcf", "63-炒面": "cm", "64-肉夹馍": "rjm", "65-凉皮": "lp",
-            "66-酸菜鱼": "scy", "67-水煮鱼": "szy", "68-回锅肉": "hgr", "69-过桥米线": "gqmx",
-            "70-印尼炒饭": "yncf", "71-马来拉面": "mllm", "72-可颂面包": "ksmb", "73-奶酪焗通心粉": "nljtxf",
-            "74-日式豚骨拉面": "rstglm", "75-韩式炸鸡": "hszj", "76-泰式炒饭": "tscf",
-            "77-印度唐杜里鸡": "ydtdlj", "78-西班牙土豆蛋饼": "xbhtddb", "79-墨西哥鸡肉塔可": "mxgjrltk",
-            "80-日式照烧鸡排": "rszsjp",
-            // 甜点
+            "09-东坡肉": "dpr", "10-意大利肉酱面": "ydlrjm",
             "01-提拉米苏": "tlms", "02-芝士蛋糕": "zsdg", "03-巧克力蛋糕": "qkldg", "04-布朗尼": "bln",
             "05-曲奇饼干": "qqbg", "06-冰淇淋": "bql", "07-焦糖布丁": "jtbd", "08-水果慕斯": "sgms",
-            "09-苹果派": "pgp", "10-蛋挞": "dt", "11-舒芙蕾": "sfl", "12-拿破仑蛋糕": "npldg",
-            "13-闪电泡芙": "sdpf", "14-蒙布朗": "mbl", "15-纽约芝士蛋糕": "nyzsdg",
-            "16-熔岩巧克力蛋糕": "ryqkldg", "17-蜂蜜蛋糕": "fmdg", "18-桂花糕": "ghg",
-            "19-杨枝甘露": "yzgl", "20-双皮奶": "spn", "21-肉松小贝": "rsxb",
-            "22-豆乳盒子": "drhz", "23-糖不甩": "tbs", "24-芝士焗红薯": "zsjhs",
-            "25-抹茶红豆卷": "mchdj", "26-草莓大福": "cmdf", "27-雪花酥": "xxs",
-            "28-红糖糍粑": "htcb", "29-驴打滚": "ldg", "30-艾草青团": "acqj",
-            "31-老婆饼": "lpb", "32-凤梨酥": "fls", "33-雪梅娘": "xmn",
-            "34-日式抹茶大福": "rsmcdf", "35-日式芝士蛋糕": "rszsdg", "36-番薯糖水": "fsts",
-            "37-芝麻糊": "zmh", "38-核桃露": "htl", "39-杏仁奶露": "xnnl",
-            "40-木瓜炖雪蛤": "mgdxh", "41-芒果百香果慕斯": "mgbxgms", "42-栗子蒙布朗": "lzmbl",
-            "43-歌剧院蛋糕": "gjydg", "44-咖啡百香果慕斯": "kfbxgms", "45-柚子慕斯": "yzms",
-            "46-蓝莓芝士条": "lmzst", "47-奥利奥芝士蛋糕": "alzsdg", "48-椰丝球": "ysq",
-            "49-芒果糯米饭": "mgnmf", "50-芝士焗番茄": "zsj fq", "51-蛋白霜柠檬塔": "dbpnmt",
-            "52-苹果肉桂卷": "pgrgj", "53-咖啡冻": "kfd", "54-蜜桃乌龙茶冻": "mtwld",
-            "55-红酒烩梨": "hjhl", "56-南瓜布丁": "ngbd", "57-巧克力熔岩塔": "qklryt",
-            "58-紫薯奶酪球": "zsnlq", "59-桂花山药糕": "ghsyg", "60-红豆年糕汤": "hdngt",
-            "61-奶油蘑菇派": "nlm gp", "62-焦糖海盐冰淇淋": "jthybql", "63-抹茶白巧慕斯": "mcbqms",
-            "64-百香果磅蛋糕": "bxgpdg", "65-朗姆葡萄干冰淇淋": "lmpgqbql",
-            "66-椰香芒果糯米饭球": "yxmgnmfq", "67-巧克力椰子球": "qklyzq",
-            "68-柠檬酱": "nmj", "69-枫糖浆松饼": "ftjsb", "70-肉桂苹果烤燕麦": "rgpgkym",
-            "71-巧克力马芬": "qklmf", "72-柠檬马芬": "nm mf", "73-香蕉磅蛋糕": "xjpdg",
-            "74-酥皮泡芙": "sppf", "75-柠檬凝乳": "nm nr", "76-焦糖酱": "jtj",
-            "77-意式奶冻": "ysnd", "78-覆盆子奶酪塔": "fpznlt", "79-椰香咖喱角": "yxklj",
-            "80-奶酪焗苹果": "nljp", "81-巧克力豆布朗尼": "qkldbn",
-            "82-糖渍橙皮": "tzcp", "83-樱花大福": "y hdf", "84-椰香奶冻卷": "yxndj",
-            "85-苹果翻转蛋糕": "pgfzdg", "86-榛子巧克力酱": "zzqklj",
-            "87-薄荷巧克力冰淇淋": "bhqklbql", "88-姜汁撞奶": "jzzn",
-            "89-椰奶西谷米": "ynxgm", "90-奶香玉米烙": "nxyml",
-            "91-红糖红枣糕": "hthzg", "92-紫薯西米露": "zsxml",
-            "93-豆腐布朗尼": "dfbln", "94-豆腐芝士蛋糕": "dfzsdg",
-            "95-南瓜派": "ngp", "96-意式圣诞蛋糕": "yssddg"
+            "09-苹果派": "pgp", "10-蛋挞": "dt"
         };
         
-        // 匹配搜索词（支持汉字或拼音首字母）
         function matchRecipe(recipe) {
             const name = recipe.name;
             const pinyin = pinyinMap[name] || '';
-            
-            // 匹配中文名
             if (name.toLowerCase().includes(searchQuery.toLowerCase())) return true;
-            // 匹配拼音首字母
             if (pinyin && pinyin.toLowerCase().includes(searchQuery.toLowerCase())) return true;
-            
             return false;
         }
         
@@ -1104,13 +456,9 @@
         function filterRecipes() {
             const recipes = getRecipes();
             if (!searchQuery) return recipes;
-            // 搜索时，合并经典菜谱和甜点
-            if (searchQuery) {
-                const all = [...classicNames.map(n => ({ name: n, type: 'classic' })), 
-                            ...dessertsNames.map(n => ({ name: n, type: 'desserts' }))];
-                return all.filter(matchRecipe);
-            }
-            return recipes;
+            const all = [...classicNames.map(n => ({ name: n, type: 'classic' })), 
+                        ...dessertsNames.map(n => ({ name: n, type: 'desserts' }))];
+            return all.filter(matchRecipe);
         }
         
         function renderRecipes() {
@@ -1121,7 +469,7 @@
             const stats = document.getElementById('stats');
             
             const totalItems = filtered.length;
-            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
             const start = (currentPage - 1) * itemsPerPage;
             const end = start + itemsPerPage;
             const pageItems = filtered.slice(start, end);
@@ -1138,19 +486,17 @@
             noResults.style.display = 'none';
             
             grid.innerHTML = pageItems.map((item, i) => `
-                <div class="recipe-card" style="animation-delay: ${i * 0.05}s" onclick="openRecipe('${item.name}')">
+                <div class="recipe-card" style="animation-delay: ${i * 0.05}s" onclick="openRecipe('${item.name}', '${item.type}')">
                     <div class="card-image">${getIcon(start + i)}</div>
                     <div class="card-content">
                         <div class="card-title">${item.name.replace(/^\d+-/, '')}</div>
-                        <span class="card-number">${item.type === 'classic' ? '🍲 经典菜谱' : '🍰 甜点'} ${item.name}</span>
+                        <span class="card-number">${item.type === 'classic' ? '🍲 经典菜谱' : '🍰 甜点'}</span>
                     </div>
                 </div>
             `).join('');
             
-            // Render pagination
             let paginationHTML = '';
             paginationHTML += `<button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹</button>`;
-            
             for (let i = 1; i <= totalPages; i++) {
                 if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
                     paginationHTML += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
@@ -1158,14 +504,13 @@
                     paginationHTML += `<span style="padding: 0 0.5rem;">...</span>`;
                 }
             }
-            
             paginationHTML += `<button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>›</button>`;
             pagination.innerHTML = paginationHTML;
         }
         
         function goToPage(page) {
             const filtered = filterRecipes();
-            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+            const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
             if (page < 1 || page > totalPages) return;
             currentPage = page;
             renderRecipes();
@@ -1176,104 +521,98 @@
             currentPage = 1;
             searchQuery = '';
             document.getElementById('searchInput').value = '';
-            
-            // 显示 Tab，隐藏搜索结果提示
             document.getElementById('tabs').style.display = 'flex';
             document.querySelector('.subtitle').textContent = '经典菜肴 · 美味甜点 · 应有尽有';
-            
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
-            
             renderRecipes();
         }
         
         function searchRecipes() {
             searchQuery = document.getElementById('searchInput').value.trim();
             currentPage = 1;
-            
-            // 根据是否有搜索词显示/隐藏 tabs
             if (searchQuery) {
                 document.getElementById('tabs').style.display = 'none';
             } else {
                 document.getElementById('tabs').style.display = 'flex';
             }
-            
             renderRecipes();
         }
         
-        // 实时搜索 - 打字过程中自动搜索
         document.getElementById('searchInput').addEventListener('input', (e) => {
-            // 清除之前的定时器
             if (searchTimeout) clearTimeout(searchTimeout);
-            // 设置新的定时器，300ms 后执行搜索（防抖）
             searchTimeout = setTimeout(() => {
                 searchQuery = e.target.value.trim();
                 currentPage = 1;
-                
-                // 根据是否有搜索词显示/隐藏 tabs
                 if (searchQuery) {
                     document.getElementById('tabs').style.display = 'none';
                 } else {
                     document.getElementById('tabs').style.display = 'flex';
                 }
-                
                 renderRecipes();
             }, 300);
         });
         
-        function openRecipe(name) {
+        // 解析 Markdown 内容
+        function parseMarkdown(text) {
+            let html = text
+                // 标题
+                .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+                .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+                // 粗体
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                // 无序列表
+                .replace(/^- (.+)$/gm, '<li>$1</li>')
+                // 段落
+                .replace(/\n\n/g, '</p><p>');
+            
+            // 包装列表
+            html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+            // 包装段落
+            html = '<p>' + html + '</p>';
+            // 清理空段落
+            html = html.replace(/<p><\/p>/g, '');
+            html = html.replace(/<p>(<h2>)/g, '$1');
+            html = html.replace(/(<\/h2>)<\/p>/g, '$1');
+            html = html.replace(/<p>(<h3>)/g, '$1');
+            html = html.replace(/(<\/h3>)<\/p>/g, '$1');
+            html = html.replace(/<p>(<ul>)/g, '$1');
+            html = html.replace(/(<\/ul>)<\/p>/g, '$1');
+            
+            return html;
+        }
+        
+        // 打开菜谱详情
+        async function openRecipe(name, type) {
             const modal = document.getElementById('recipeModal');
             const modalTitle = document.getElementById('modalTitle');
             const modalBody = document.getElementById('modalBody');
             
             modalTitle.textContent = name;
-            
-            // Get recipe content - in production this would load from file
-            const content = recipeContents[name] || {
-                intro: `这是${name}的详细介绍...`,
-                ingredients: ["食材1", "食材2", "食材3", "食材4", "食材5"],
-                steps: [
-                    "步骤1：准备食材",
-                    "步骤2：处理食材",
-                    "步骤3：开始烹饪",
-                    "步骤4：调味",
-                    "步骤5：装盘"
-                ],
-                tips: ["技巧1", "技巧2"]
-            };
-            
-            modalBody.innerHTML = `
-                <div class="section">
-                    <div class="section-title">📖 简介</div>
-                    <p>${content.intro}</p>
-                </div>
-                
-                <div class="section">
-                    <div class="section-title">🥬 所需食材</div>
-                    <div class="ingredient-list">
-                        ${content.ingredients.map(i => `<div class="ingredient-item">${i}</div>`).join('')}
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-title">👨‍🍳 烹饪步骤</div>
-                    <div class="step-list">
-                        ${content.steps.map(s => `<div class="step-item">${s}</div>`).join('')}
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="tips">
-                        <div class="tips-title">💡 烹饪技巧</div>
-                        <ul class="tips-list">
-                            ${content.tips.map(t => `<li>${t}</li>`).join('')}
-                        </ul>
-                    </div>
-                </div>
-            `;
-            
+            modalBody.innerHTML = '<div class="loading"><div class="spinner"></div><p>加载中...</p></div>';
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
+            
+            // 构建文件 URL
+            const folder = type === 'classic' ? 'classic' : 'desserts';
+            const fileName = encodeURIComponent(name + '.md');
+            const url = `${BASE_URL}/${folder}/${fileName}`;
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Recipe not found');
+                const text = await response.text();
+                const content = parseMarkdown(text);
+                modalBody.innerHTML = `<div class="md-content">${content}</div>`;
+            } catch (error) {
+                console.error('Error loading recipe:', error);
+                modalBody.innerHTML = `
+                    <div class="section">
+                        <p>⚠️ 无法加载菜谱内容</p>
+                        <p style="color: var(--gray); margin-top: 0.5rem;">请访问 GitHub 查看原文: <a href="${url}" target="_blank">${name}.md</a></p>
+                    </div>
+                `;
+            }
         }
         
         function closeModal() {
@@ -1289,7 +628,6 @@
             if (e.key === 'Escape') closeModal();
         });
         
-        // Initialize
         renderRecipes();
     </script>
 </body>
