@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍳 食谱大全</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --gray: #636e72;
+            --shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+        
+        /* Header */
+        header {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,107,107,0.05) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .subtitle {
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 300;
+        }
+        
+        /* Search */
+        .search-container {
+            max-width: 600px;
+            margin: -1.5rem auto 2rem;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .search-box {
+            background: white;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus-within {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+        
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            outline: none;
+            font-family: inherit;
+        }
+        
+        .search-box button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box button:hover {
+            background: #ff5252;
+            transform: scale(1.02);
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+        
+        .tab {
+            padding: 0.8rem 2rem;
+            border: none;
+            background: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255,107,107,0.3);
+        }
+        
+        .tab:hover:not(.active) {
+            transform: translateY(-2px);
+        }
+        
+        /* Grid */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 2rem;
+        }
+        
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .recipe-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card-image {
+            height: 160px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .card-number {
+            display: inline-block;
+            background: var(--light);
+            color: var(--gray);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .page-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Recipe Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s ease;
+            position: relative;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .ingredient-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .ingredient-item {
+            padding: 0.5rem;
+            background: var(--light);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .step-list {
+            counter-reset: step;
+        }
+        
+        .step-item {
+            position: relative;
+            padding: 1rem 1rem 1rem 3.5rem;
+            margin-bottom: 1rem;
+            background: var(--light);
+            border-radius: 12px;
+            line-height: 1.6;
+        }
+        
+        .step-item::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        
+        .tips {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .tips-title {
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tips-list {
+            list-style: none;
+        }
+        
+        .tips-list li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .tips-list li::before {
+            content: '💡';
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Stats */
+        .stats {
+            text-align: center;
+            padding: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--light);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* No results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray);
+        }
+        
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">🍳</div>
+        <h1>食谱大全</h1>
+        <p class="subtitle">经典菜肴 · 美味甜点 · 应有尽有</p>
+    </header>
+    
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="搜索食谱...">
+            <button onclick="searchRecipes()">搜索</button>
+        </div>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('classic')">🍲 经典菜谱 (100)</button>
+        <button class="tab" onclick="switchTab('desserts')">🍰 甜点 (100)</button>
+    </div>
+    
+    <div class="container">
+        <div class="stats" id="stats"></div>
+        <div class="recipe-grid" id="recipeGrid"></div>
+        <div class="no-results" id="noResults" style="display: none;">
+            <div class="no-results-icon">🔍</div>
+            <p>没有找到匹配的食谱</p>
+        </div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+    
+    <!-- Recipe Modal -->
+    <div class="modal" id="recipeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+                <h2 id="modalTitle"></h2>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>加载中...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Recipe data - these would be loaded from files in production
+        const classicRecipes = [];
+        const dessertsRecipes = [];
+        
+        let currentTab = 'classic';
+        let currentPage = 1;
+        let searchQuery = '';
+        const itemsPerPage = 12;
+        
+        // Load recipe names from file structure (simulated)
+        const classicNames = [
+            "01-麻婆豆腐", "02-宫保鸡丁", "03-红烧肉", "04-糖醋排骨", "05-鱼香肉丝",
+            "06-北京烤鸭", "07-西湖醋鱼", "08-辣子鸡", "09-东坡肉", "10-意大利肉酱面",
+            "11-越南春卷", "12-寿司卷", "13-韩式烤肉", "14-冬阴功汤", "15-印度咖喱鸡",
+            "16-牛排", "17-披萨", "18-拉面", "19-天妇罗", "20-照烧鸡排",
+            "21-海南鸡饭", "22-咖喱蟹", "23-肉骨茶", "24-越南春卷", "25-印度馕",
+            "26-印度香饭", "27-泡菜", "28-味噌汤", "29-石锅拌饭", "30-汉堡",
+            "31-西班牙海鲜饭", "32-法式洋葱汤", "33-凯撒沙拉", "34-班尼迪克蛋", "35-舒芙蕾",
+            "36-口水鸡", "37-狮子头", "38-锅包肉", "39-叫化鸡", "40-开水白菜",
+            "41-樟茶鸭", "42-烤羊排", "43-法式蜗牛", "44-希腊沙拉", "45-蘑菇浓汤",
+            "46-勃艮第红酒牛肉", "47-印度玛萨拉", "48-印度塔利", "49-红烧肉", "50-糖醋里脊",
+            "51-西湖醋鱼", "52-宫保鸡丁", "53-番茄意大利面", "54-味增汤", "55-部队锅",
+            "56-冬阴功汤", "57-咖喱鸡", "58-寿司卷", "59-墨西哥卷饼", "60-越南河粉",
+            "61-法式洋葱汤", "62-意大利烩饭", "63-烤羊排", "64-炸鸡", "65-沙嗲牛肉",
+            "66-印度飞饼", "67-披萨", "68-煎牛排", "69-烤鸡翅", "70-海南鸡饭",
+            "71-罗宋汤", "72-蛋炒饭", "73-炒面", "74-肉夹馍", "75-凉皮",
+            "76-酸菜鱼", "77-水煮鱼", "78-回锅肉", "79-鱼香肉丝", "80-辣子鸡",
+            "81-口水鸡", "82-狮子头", "83-锅包肉", "84-东坡肉", "85-过桥米线",
+            "86-肉骨茶", "87-印尼炒饭", "88-马来拉面", "89-西班牙海鲜饭", "90-可颂面包",
+            "91-奶酪焗通心粉", "92-印度玛萨拉", "93-日式豚骨拉面", "94-天妇罗", "95-韩式炸鸡",
+            "96-泰式炒饭", "97-印度唐杜里鸡", "98-西班牙土豆蛋饼", "99-墨西哥鸡肉塔可", "100-日式照烧鸡排"
+        ];
+        
+        const dessertsNames = [
+            "01-提拉米苏", "02-芝士蛋糕", "03-巧克力蛋糕", "04-布朗尼", "05-曲奇饼干",
+            "06-冰淇淋", "07-焦糖布丁", "08-水果慕斯", "09-苹果派", "10-蛋挞",
+            "11-舒芙蕾", "12-拿破仑蛋糕", "13-闪电泡芙", "14-蒙布朗", "15-纽约芝士蛋糕",
+            "16-熔岩巧克力蛋糕", "17-蜂蜜蛋糕", "18-拿破仑蛋糕", "19-桂花糕", "20-杨枝甘露",
+            "21-双皮奶", "22-肉松小贝", "23-豆乳盒子", "24-糖不甩", "25-芝士焗红薯",
+            "26-抹茶红豆卷", "27-豆乳盒子", "28-草莓大福", "29-雪花酥", "30-肉松小贝",
+            "31-豆乳盒子", "32-红糖糍粑", "33-驴打滚", "34-艾草青团", "35-老婆饼",
+            "36-凤梨酥", "37-雪梅娘", "38-日式抹茶大福", "39-日式芝士蛋糕", "40-番薯糖水",
+            "41-芝麻糊", "42-核桃露", "43-杏仁奶露", "44-木瓜炖雪蛤", "45-芒果百香果慕斯",
+            "46-栗子蒙布朗", "47-歌剧院蛋糕", "48-咖啡百香果慕斯", "49-柚子慕斯", "50-蓝莓芝士条",
+            "51-奥利奥芝士蛋糕", "52-椰丝球", "53-芒果糯米饭", "54-芝士焗番茄", "55-蛋白霜柠檬塔",
+            "56-苹果肉桂卷", "57-咖啡冻", "58-蜜桃乌龙茶冻", "59-红酒烩梨", "60-南瓜布丁",
+            "61-巧克力熔岩塔", "62-紫薯奶酪球", "63-桂花山药糕", "64-红豆年糕汤", "65-奶油蘑菇派",
+            "66-焦糖海盐冰淇淋", "67-抹茶白巧慕斯", "68-百香果磅蛋糕", "69-朗姆葡萄干冰淇淋", "70-椰香芒果糯米饭球",
+            "71-巧克力椰子球", "72-柠檬酱", "73-枫糖浆松饼", "74-肉桂苹果烤燕麦", "75-巧克力马芬",
+            "76-柠檬马芬", "77-香蕉磅蛋糕", "78-酥皮泡芙", "79-柠檬凝乳", "80-焦糖酱",
+            "81-意式奶冻", "82-覆盆子奶酪塔", "83-椰香咖喱角", "84-奶酪焗苹果", "85-巧克力豆布朗尼",
+            "86-糖渍橙皮", "87-樱花大福", "88-椰香奶冻卷", "89-苹果翻转蛋糕", "90-榛子巧克力酱",
+            "91-薄荷巧克力冰淇淋", "92-姜汁撞奶", "93-椰奶西谷米", "94-奶香玉米烙", "95-红糖红枣糕",
+            "96-紫薯西米露", "97-豆腐布朗尼", "98-豆腐芝士蛋糕", "99-南瓜派", "100-意式圣诞蛋糕"
+        ];
+        
+        // Recipe content (simplified for demo)
+        const recipeContents = {
+            "01-麻婆豆腐": {
+                intro: "麻婆豆腐是四川传统名菜，以麻辣鲜香著称，是川菜代表性菜品。",
+                ingredients: ["豆腐 400g", "猪肉末 100g", "郫县豆瓣酱 2勺", "花椒粉 1勺", "蒜末 适量", "葱姜 适量", "生抽 1勺", "老抽 1勺", "糖 1勺", "水淀粉 适量"],
+                steps: [
+                    "豆腐切小块，用盐水焯一下备用",
+                    "锅中热油，爆香肉末至变色",
+                    "加入郫县豆瓣酱炒出红油",
+                    "加入葱姜蒜末炒香",
+                    "加入适量清水，放入豆腐",
+                    "加入生抽、老抽、糖调味",
+                    "小火炖煮5分钟",
+                    "用水淀粉勾芡，撒上花椒粉",
+                    "出锅装盘，撒上葱花"
+                ],
+                tips: ["豆腐提前焯水可以去豆腥味", "勾芡要分次加入", "花椒粉可以根据个人口味调整"]
+            },
+            "01-提拉米苏": {
+                intro: "提拉米苏是意大利经典甜点，意为'带我走'，口感绵密，咖啡香浓郁。",
+                ingredients: ["马斯卡彭奶酪 250g", "淡奶油 150ml", "手指饼干 200g", "浓缩咖啡 200ml", "蛋黄 3个", "细砂糖 60g", "可可粉 适量"],
+                steps: [
+                    "咖啡放凉，可加入朗姆酒",
+                    "蛋黄加糖隔热水打发",
+                    "加入马斯卡彭奶酪搅拌均匀",
+                    "淡奶油打发至七分发",
+                    "与奶酪糊混合翻拌",
+                    "手指饼干蘸咖啡铺在容器底",
+                    "铺一层奶酪糊，重复操作",
+                    "冷藏4小时以上",
+                    "食用前筛上可可粉"
+                ],
+                tips: ["手指饼干不要泡太久", "可可粉要现筛才香", "朗姆酒可增添风味"]
+            }
+        };
+        
+        // Icons for recipes
+        const foodIcons = ['🍲', '🥘', '🍜', '🍣', '🍛', '🍕', '🍔', '🌮', '🥗', '🍝', '🥩', '🍗', '🍤', '🥟', '🍥', '🍡', '🧁', '🍰', '🍧', '🍮'];
+        
+        function getIcon(index) {
+            return foodIcons[index % foodIcons.length];
+        }
+        
+        function getRecipes() {
+            return currentTab === 'classic' ? classicNames : dessertsNames;
+        }
+        
+        function filterRecipes() {
+            const recipes = getRecipes();
+            if (!searchQuery) return recipes;
+            return recipes.filter(r => r.toLowerCase().includes(searchQuery.toLowerCase()));
+        }
+        
+        function renderRecipes() {
+            const filtered = filterRecipes();
+            const grid = document.getElementById('recipeGrid');
+            const pagination = document.getElementById('pagination');
+            const noResults = document.getElementById('noResults');
+            const stats = document.getElementById('stats');
+            
+            const totalItems = filtered.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageItems = filtered.slice(start, end);
+            
+            stats.textContent = `共 ${totalItems} 个食谱 · 第 ${currentPage}/${totalPages} 页`;
+            
+            if (pageItems.length === 0) {
+                grid.innerHTML = '';
+                pagination.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            grid.innerHTML = pageItems.map((name, i) => `
+                <div class="recipe-card" style="animation-delay: ${i * 0.05}s" onclick="openRecipe('${name}')">
+                    <div class="card-image">${getIcon(start + i)}</div>
+                    <div class="card-content">
+                        <div class="card-title">${name.replace(/^\d+-/, '')}</div>
+                        <span class="card-number">${name}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Render pagination
+            let paginationHTML = '';
+            paginationHTML += `<button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹</button>`;
+            
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    paginationHTML += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    paginationHTML += `<span style="padding: 0 0.5rem;">...</span>`;
+                }
+            }
+            
+            paginationHTML += `<button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>›</button>`;
+            pagination.innerHTML = paginationHTML;
+        }
+        
+        function goToPage(page) {
+            const filtered = filterRecipes();
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderRecipes();
+        }
+        
+        function switchTab(tab) {
+            currentTab = tab;
+            currentPage = 1;
+            searchQuery = '';
+            document.getElementById('searchInput').value = '';
+            
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            renderRecipes();
+        }
+        
+        function searchRecipes() {
+            searchQuery = document.getElementById('searchInput').value.trim();
+            currentPage = 1;
+            renderRecipes();
+        }
+        
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchRecipes();
+        });
+        
+        function openRecipe(name) {
+            const modal = document.getElementById('recipeModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalTitle.textContent = name;
+            
+            // Get recipe content - in production this would load from file
+            const content = recipeContents[name] || {
+                intro: `这是${name}的详细介绍...`,
+                ingredients: ["食材1", "食材2", "食材3", "食材4", "食材5"],
+                steps: [
+                    "步骤1：准备食材",
+                    "步骤2：处理食材",
+                    "步骤3：开始烹饪",
+                    "步骤4：调味",
+                    "步骤5：装盘"
+                ],
+                tips: ["技巧1", "技巧2"]
+            };
+            
+            modalBody.innerHTML = `
+                <div class="section">
+                    <div class="section-title">📖 简介</div>
+                    <p>${content.intro}</p>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">🥬 所需食材</div>
+                    <div class="ingredient-list">
+                        ${content.ingredients.map(i => `<div class="ingredient-item">${i}</div>`).join('')}
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">👨‍🍳 烹饪步骤</div>
+                    <div class="step-list">
+                        ${content.steps.map(s => `<div class="step-item">${s}</div>`).join('')}
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="tips">
+                        <div class="tips-title">💡 烹饪技巧</div>
+                        <ul class="tips-list">
+                            ${content.tips.map(t => `<li>${t}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            document.getElementById('recipeModal').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+        
+        document.getElementById('recipeModal').addEventListener('click', (e) => {
+            if (e.target.id === 'recipeModal') closeModal();
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+        
+        // Initialize
+        renderRecipes();
+    </script>
+</body>
+</html>
