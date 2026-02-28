@@ -484,8 +484,9 @@
         </div>
     </div>
     
-    <div class="tabs">
-        <button class="tab active" onclick="switchTab('all')">🍽️ 全部食谱 (200)</button>
+    <div class="tabs" id="tabs">
+        <button class="tab active" onclick="switchTab('classic')">🍲 经典菜谱 (100)</button>
+        <button class="tab" onclick="switchTab('desserts')">🍰 甜点 (100)</button>
     </div>
     
     <div class="container">
@@ -519,7 +520,7 @@
         const classicRecipes = [];
         const dessertsRecipes = [];
         
-        let currentTab = 'all';
+        let currentTab = 'classic';
         let currentPage = 1;
         let searchQuery = '';
         const itemsPerPage = 12;
@@ -616,10 +617,6 @@
         }
         
         function getRecipes() {
-            if (currentTab === 'all') {
-                return [...classicNames.map(n => ({ name: n, type: 'classic' })), 
-                        ...dessertsNames.map(n => ({ name: n, type: 'desserts' }))];
-            }
             const list = currentTab === 'classic' ? classicNames : dessertsNames;
             return list.map(n => ({ name: n, type: currentTab }));
         }
@@ -627,7 +624,13 @@
         function filterRecipes() {
             const recipes = getRecipes();
             if (!searchQuery) return recipes;
-            return recipes.filter(r => r.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            // 搜索时，合并经典菜谱和甜点
+            if (searchQuery) {
+                const all = [...classicNames.map(n => ({ name: n, type: 'classic' })), 
+                            ...dessertsNames.map(n => ({ name: n, type: 'desserts' }))];
+                return all.filter(r => r.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            }
+            return recipes;
         }
         
         function renderRecipes() {
@@ -694,6 +697,10 @@
             searchQuery = '';
             document.getElementById('searchInput').value = '';
             
+            // 显示 Tab，隐藏搜索结果提示
+            document.getElementById('tabs').style.display = 'flex';
+            document.querySelector('.subtitle').textContent = '经典菜肴 · 美味甜点 · 应有尽有';
+            
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
             
@@ -703,6 +710,14 @@
         function searchRecipes() {
             searchQuery = document.getElementById('searchInput').value.trim();
             currentPage = 1;
+            
+            // 根据是否有搜索词显示/隐藏 tabs
+            if (searchQuery) {
+                document.getElementById('tabs').style.display = 'none';
+            } else {
+                document.getElementById('tabs').style.display = 'flex';
+            }
+            
             renderRecipes();
         }
         
@@ -714,6 +729,14 @@
             searchTimeout = setTimeout(() => {
                 searchQuery = e.target.value.trim();
                 currentPage = 1;
+                
+                // 根据是否有搜索词显示/隐藏 tabs
+                if (searchQuery) {
+                    document.getElementById('tabs').style.display = 'none';
+                } else {
+                    document.getElementById('tabs').style.display = 'flex';
+                }
+                
                 renderRecipes();
             }, 300);
         });
