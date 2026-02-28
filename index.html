@@ -616,6 +616,81 @@
             return foodIcons[index % foodIcons.length];
         }
         
+        // 拼音映射表（中文名 -> 拼音首字母缩写）
+        const pinyinMap = {
+            // 经典菜谱
+            "01-麻婆豆腐": "mpdf", "02-宫保鸡丁": "gbjd", "03-红烧肉": "hsr", "04-糖醋排骨": "tcpg",
+            "05-鱼香肉丝": "yxrs", "06-北京烤鸭": "bjky", "07-西湖醋鱼": "xhcy", "08-辣子鸡": "lzj",
+            "09-东坡肉": "dpr", "10-意大利肉酱面": "ydlrjm", "11-越南春卷": "vncj", "12-寿司卷": "ssj",
+            "13-韩式烤肉": "hskr", "14-冬阴功汤": "dygt", "15-印度咖喱鸡": "ydklj", "16-牛排": "np",
+            "17-披萨": "ps", "18-拉面": "lm", "19-天妇罗": "tfl", "20-照烧鸡排": "zsjp",
+            "21-海南鸡饭": "hnjf", "22-咖喱蟹": "klx", "23-肉骨茶": "rgc", "24-印度馕": "ydn",
+            "25-印度香饭": "ydxf", "26-泡菜": "pc", "27-味噌汤": "mzt", "28-石锅拌饭": "sgbf",
+            "29-汉堡": "hb", "30-西班牙海鲜饭": "xbhhxf", "31-法式洋葱汤": "fsyct", "32-凯撒沙拉": "kssl",
+            "33-班尼迪克蛋": "bndkd", "34-舒芙蕾": "sfl", "35-口水鸡": "ksj", "36-狮子头": "szt",
+            "37-锅包肉": "gbr", "38-叫化鸡": "jhj", "39-开水白菜": "ksbc", "40-樟茶鸭": "zcy",
+            "41-烤羊排": "kyp", "42-法式蜗牛": "fswn", "43-希腊沙拉": "xlsl", "44-蘑菇浓汤": "mgnt",
+            "45-勃艮第红酒牛肉": "bgdhjnr", "46-印度玛萨拉": "ydmsl", "47-印度塔利": "ydtl",
+            "48-糖醋里脊": "tclj", "49-番茄意大利面": "fqydlm", "50-味增汤": "mzt",
+            "51-部队锅": "bdg", "52-寿司卷": "ssj", "53-墨西哥卷饼": "mxgjb",
+            "54-越南河粉": "vnhf", "55-意大利烩饭": "ydlhf", "56-炸鸡": "zj", "57-沙嗲牛肉": "sdnr",
+            "58-印度飞饼": "ydfb", "59-煎牛排": "jnp", "60-烤鸡翅": "kjc", "61-罗宋汤": "lst",
+            "62-蛋炒饭": "dcf", "63-炒面": "cm", "64-肉夹馍": "rjm", "65-凉皮": "lp",
+            "66-酸菜鱼": "scy", "67-水煮鱼": "szy", "68-回锅肉": "hgr", "69-过桥米线": "gqmx",
+            "70-印尼炒饭": "yncf", "71-马来拉面": "mllm", "72-可颂面包": "ksmb", "73-奶酪焗通心粉": "nljtxf",
+            "74-日式豚骨拉面": "rstglm", "75-韩式炸鸡": "hszj", "76-泰式炒饭": "tscf",
+            "77-印度唐杜里鸡": "ydtdlj", "78-西班牙土豆蛋饼": "xbhtddb", "79-墨西哥鸡肉塔可": "mxgjrltk",
+            "80-日式照烧鸡排": "rszsjp",
+            // 甜点
+            "01-提拉米苏": "tlms", "02-芝士蛋糕": "zsdg", "03-巧克力蛋糕": "qkldg", "04-布朗尼": "bln",
+            "05-曲奇饼干": "qqbg", "06-冰淇淋": "bql", "07-焦糖布丁": "jtbd", "08-水果慕斯": "sgms",
+            "09-苹果派": "pgp", "10-蛋挞": "dt", "11-舒芙蕾": "sfl", "12-拿破仑蛋糕": "npldg",
+            "13-闪电泡芙": "sdpf", "14-蒙布朗": "mbl", "15-纽约芝士蛋糕": "nyzsdg",
+            "16-熔岩巧克力蛋糕": "ryqkldg", "17-蜂蜜蛋糕": "fmdg", "18-桂花糕": "ghg",
+            "19-杨枝甘露": "yzgl", "20-双皮奶": "spn", "21-肉松小贝": "rsxb",
+            "22-豆乳盒子": "drhz", "23-糖不甩": "tbs", "24-芝士焗红薯": "zsjhs",
+            "25-抹茶红豆卷": "mchdj", "26-草莓大福": "cmdf", "27-雪花酥": "xxs",
+            "28-红糖糍粑": "htcb", "29-驴打滚": "ldg", "30-艾草青团": "acqj",
+            "31-老婆饼": "lpb", "32-凤梨酥": "fls", "33-雪梅娘": "xmn",
+            "34-日式抹茶大福": "rsmcdf", "35-日式芝士蛋糕": "rszsdg", "36-番薯糖水": "fsts",
+            "37-芝麻糊": "zmh", "38-核桃露": "htl", "39-杏仁奶露": "xnnl",
+            "40-木瓜炖雪蛤": "mgdxh", "41-芒果百香果慕斯": "mgbxgms", "42-栗子蒙布朗": "lzmbl",
+            "43-歌剧院蛋糕": "gjydg", "44-咖啡百香果慕斯": "kfbxgms", "45-柚子慕斯": "yzms",
+            "46-蓝莓芝士条": "lmzst", "47-奥利奥芝士蛋糕": "alzsdg", "48-椰丝球": "ysq",
+            "49-芒果糯米饭": "mgnmf", "50-芝士焗番茄": "zsj fq", "51-蛋白霜柠檬塔": "dbpnmt",
+            "52-苹果肉桂卷": "pgrgj", "53-咖啡冻": "kfd", "54-蜜桃乌龙茶冻": "mtwld",
+            "55-红酒烩梨": "hjhl", "56-南瓜布丁": "ngbd", "57-巧克力熔岩塔": "qklryt",
+            "58-紫薯奶酪球": "zsnlq", "59-桂花山药糕": "ghsyg", "60-红豆年糕汤": "hdngt",
+            "61-奶油蘑菇派": "nlm gp", "62-焦糖海盐冰淇淋": "jthybql", "63-抹茶白巧慕斯": "mcbqms",
+            "64-百香果磅蛋糕": "bxgpdg", "65-朗姆葡萄干冰淇淋": "lmpgqbql",
+            "66-椰香芒果糯米饭球": "yxmgnmfq", "67-巧克力椰子球": "qklyzq",
+            "68-柠檬酱": "nmj", "69-枫糖浆松饼": "ftjsb", "70-肉桂苹果烤燕麦": "rgpgkym",
+            "71-巧克力马芬": "qklmf", "72-柠檬马芬": "nm mf", "73-香蕉磅蛋糕": "xjpdg",
+            "74-酥皮泡芙": "sppf", "75-柠檬凝乳": "nm nr", "76-焦糖酱": "jtj",
+            "77-意式奶冻": "ysnd", "78-覆盆子奶酪塔": "fpznlt", "79-椰香咖喱角": "yxklj",
+            "80-奶酪焗苹果": "nljp", "81-巧克力豆布朗尼": "qkldbn",
+            "82-糖渍橙皮": "tzcp", "83-樱花大福": "y hdf", "84-椰香奶冻卷": "yxndj",
+            "85-苹果翻转蛋糕": "pgfzdg", "86-榛子巧克力酱": "zzqklj",
+            "87-薄荷巧克力冰淇淋": "bhqklbql", "88-姜汁撞奶": "jzzn",
+            "89-椰奶西谷米": "ynxgm", "90-奶香玉米烙": "nxyml",
+            "91-红糖红枣糕": "hthzg", "92-紫薯西米露": "zsxml",
+            "93-豆腐布朗尼": "dfbln", "94-豆腐芝士蛋糕": "dfzsdg",
+            "95-南瓜派": "ngp", "96-意式圣诞蛋糕": "yssddg"
+        };
+        
+        // 匹配搜索词（支持汉字或拼音首字母）
+        function matchRecipe(recipe) {
+            const name = recipe.name;
+            const pinyin = pinyinMap[name] || '';
+            
+            // 匹配中文名
+            if (name.toLowerCase().includes(searchQuery.toLowerCase())) return true;
+            // 匹配拼音首字母
+            if (pinyin && pinyin.toLowerCase().includes(searchQuery.toLowerCase())) return true;
+            
+            return false;
+        }
+        
         function getRecipes() {
             const list = currentTab === 'classic' ? classicNames : dessertsNames;
             return list.map(n => ({ name: n, type: currentTab }));
@@ -628,7 +703,7 @@
             if (searchQuery) {
                 const all = [...classicNames.map(n => ({ name: n, type: 'classic' })), 
                             ...dessertsNames.map(n => ({ name: n, type: 'desserts' }))];
-                return all.filter(r => r.name.toLowerCase().includes(searchQuery.toLowerCase()));
+                return all.filter(matchRecipe);
             }
             return recipes;
         }
