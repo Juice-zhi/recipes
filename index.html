@@ -485,8 +485,7 @@
     </div>
     
     <div class="tabs">
-        <button class="tab active" onclick="switchTab('classic')">🍲 经典菜谱 (100)</button>
-        <button class="tab" onclick="switchTab('desserts')">🍰 甜点 (100)</button>
+        <button class="tab active" onclick="switchTab('all')">🍽️ 全部食谱 (200)</button>
     </div>
     
     <div class="container">
@@ -520,10 +519,11 @@
         const classicRecipes = [];
         const dessertsRecipes = [];
         
-        let currentTab = 'classic';
+        let currentTab = 'all';
         let currentPage = 1;
         let searchQuery = '';
         const itemsPerPage = 12;
+        let searchTimeout = null;
         
         // Load recipe names from file structure (simulated)
         const classicNames = [
@@ -616,13 +616,18 @@
         }
         
         function getRecipes() {
-            return currentTab === 'classic' ? classicNames : dessertsNames;
+            if (currentTab === 'all') {
+                return [...classicNames.map(n => ({ name: n, type: 'classic' })), 
+                        ...dessertsNames.map(n => ({ name: n, type: 'desserts' }))];
+            }
+            const list = currentTab === 'classic' ? classicNames : dessertsNames;
+            return list.map(n => ({ name: n, type: currentTab }));
         }
         
         function filterRecipes() {
             const recipes = getRecipes();
             if (!searchQuery) return recipes;
-            return recipes.filter(r => r.toLowerCase().includes(searchQuery.toLowerCase()));
+            return recipes.filter(r => r.name.toLowerCase().includes(searchQuery.toLowerCase()));
         }
         
         function renderRecipes() {
@@ -649,12 +654,12 @@
             
             noResults.style.display = 'none';
             
-            grid.innerHTML = pageItems.map((name, i) => `
-                <div class="recipe-card" style="animation-delay: ${i * 0.05}s" onclick="openRecipe('${name}')">
+            grid.innerHTML = pageItems.map((item, i) => `
+                <div class="recipe-card" style="animation-delay: ${i * 0.05}s" onclick="openRecipe('${item.name}')">
                     <div class="card-image">${getIcon(start + i)}</div>
                     <div class="card-content">
-                        <div class="card-title">${name.replace(/^\d+-/, '')}</div>
-                        <span class="card-number">${name}</span>
+                        <div class="card-title">${item.name.replace(/^\d+-/, '')}</div>
+                        <span class="card-number">${item.type === 'classic' ? '🍲 经典菜谱' : '🍰 甜点'} ${item.name}</span>
                     </div>
                 </div>
             `).join('');
@@ -701,8 +706,16 @@
             renderRecipes();
         }
         
-        document.getElementById('searchInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchRecipes();
+        // 实时搜索 - 打字过程中自动搜索
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            // 清除之前的定时器
+            if (searchTimeout) clearTimeout(searchTimeout);
+            // 设置新的定时器，300ms 后执行搜索（防抖）
+            searchTimeout = setTimeout(() => {
+                searchQuery = e.target.value.trim();
+                currentPage = 1;
+                renderRecipes();
+            }, 300);
         });
         
         function openRecipe(name) {
